@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Pedagógico de la Danza | Artes Escénicas Hidalgo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: '#fff0ff',
+                        textDark: '#4b1c71',
+                        purpleMid: '#7f4ca5',
+                        accentBtn: '#b57edc',
+                        cardBg: '#dbb6ee',
+                        cardLight: '#f6e7fc',
+                        purpleHover: '#6a3b8e'
+                    },
+                    fontFamily: {
+                        title: ['"Cormorant Garamond"', 'serif'],
+                        body: ['"Montserrat"', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'dance': '0 10px 25px -5px rgba(75, 28, 113, 0.12), 0 8px 10px -6px rgba(75, 28, 113, 0.08)',
+                        'glow': '0 0 15px rgba(181, 126, 220, 0.5)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fff0ff;
+            color: #4b1c71;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #fff0ff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #b57edc;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7f4ca5;
+        }
+
+        /* Active Navigation Tab Styling */
+        .nav-tab.active {
+            background-color: #7f4ca5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(127, 76, 165, 0.3);
+        }
+
+        /* Smooth tab transition */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Motion Toggle styling */
+        .paused-animation * {
+            animation-play-state: paused !important;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col antialiased selection:bg-accentBtn selection:text-white">
+
+    <!-- Top Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-[#fff0ff]/95 backdrop-blur-md border-b border-cardBg/60 shadow-sm">
+        <div class="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+
+                <!-- Brand / Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('inicio')">
+                    <div
+                        class="w-11 h-11 rounded-full bg-gradient-to-tr from-purpleMid to-accentBtn flex items-center justify-center text-white text-xl shadow-md">
+                        <i class="fa-solid fa-person-dancing"></i>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold font-title tracking-wide text-textDark leading-none">Danza
+                            Escénica</span>
+                        <span class="text-xs uppercase tracking-widest text-purpleMid font-semibold">Hidalgo • Artes
+                            Escénicas</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs (Desktop) -->
+                <nav
+                    class="hidden md:flex items-center space-x-1 lg:space-x-2 bg-cardLight/80 p-1.5 rounded-full border border-cardBg">
+                    <button onclick="switchTab('inicio')" id="tab-btn-inicio"
+                        class="nav-tab active px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-textDark hover:text-purpleMid">
+                        <i class="fa-solid fa-house text-xs mr-1.5"></i>Inicio
+                    </button>
+                    <button onclick="switchTab('clasica')" id="tab-btn-clasica"
+                        class="nav-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-textDark hover:text-purpleMid">
+                        <i class="fa-solid fa-crown text-xs mr-1.5"></i>Danza Clásica
+                    </button>
+                    <button onclick="switchTab('moderna')" id="tab-btn-moderna"
+                        class="nav-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-textDark hover:text-purpleMid">
+                        <i class="fa-solid fa-bolt text-xs mr-1.5"></i>Danza Moderna
+                    </button>
+                    <button onclick="switchTab('contemporanea')" id="tab-btn-contemporanea"
+                        class="nav-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-textDark hover:text-purpleMid">
+                        <i class="fa-solid fa-water text-xs mr-1.5"></i>Contemporánea
+                    </button>
+                    <button onclick="switchTab('quiz')" id="tab-btn-quiz"
+                        class="nav-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-textDark hover:text-purpleMid">
+                        <i class="fa-solid fa-graduation-cap text-xs mr-1.5"></i>Autoevaluación
+                    </button>
+                </nav>
+
+                <!-- Accessibility Controls -->
+                <div class="flex items-center space-x-2">
+                    <button id="motion-toggle-btn" onclick="toggleMotion()"
+                        class="p-2.5 rounded-full bg-cardBg/50 text-textDark hover:bg-cardBg transition-all text-xs font-semibold flex items-center space-x-1"
+                        title="Pausar/Activar animación">
+                        <i class="fa-solid fa-pause" id="motion-icon"></i>
+                        <span class="hidden lg:inline text-xs" id="motion-text">Animaciones</span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()"
+                        class="md:hidden p-2 rounded-lg text-textDark hover:bg-cardBg focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bgMain border-b border-cardBg px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('inicio')"
+                class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-textDark hover:bg-cardBg">
+                <i class="fa-solid fa-house w-6 text-purpleMid"></i>Inicio
+            </button>
+            <button onclick="switchTab('clasica')"
+                class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-textDark hover:bg-cardBg">
+                <i class="fa-solid fa-crown w-6 text-purpleMid"></i>Danza Clásica
+            </button>
+            <button onclick="switchTab('moderna')"
+                class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-textDark hover:bg-cardBg">
+                <i class="fa-solid fa-bolt w-6 text-purpleMid"></i>Danza Moderna
+            </button>
+            <button onclick="switchTab('contemporanea')"
+                class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-textDark hover:bg-cardBg">
+                <i class="fa-solid fa-water w-6 text-purpleMid"></i>Danza Contemporánea
+            </button>
+            <button onclick="switchTab('quiz')"
+                class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-textDark hover:bg-cardBg">
+                <i class="fa-solid fa-graduation-cap w-6 text-purpleMid"></i>Quiz Escolar
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= TAB 1: INICIO ================= -->
+        <section id="content-inicio" class="tab-content active space-y-12">
+
+            <!-- Hero Banner -->
+            <div
+                class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-textDark via-purpleMid to-accentBtn text-white p-8 sm:p-12 shadow-dance">
+                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                    <i class="fa-solid fa-icons text-[280px]"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span
+                        class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold tracking-wider uppercase border border-white/30">
+                        Proyecto Educativo • Hidalgo
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight">
+                        El Arte del Movimiento Humano
+                    </h1>
+                    <p class="text-purple-100 text-base sm:text-lg leading-relaxed font-light">
+                        Una plataforma pedagógica diseñada para la materia de <strong
+                            class="font-semibold text-white">Artes Escénicas</strong>. Explora los fundamentos teóricos,
+                        la evolución histórica y las técnicas emblemáticas del Ballet Clásico, la Danza Moderna y la
+                        Danza Contemporánea.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchTab('clasica')"
+                            class="px-6 py-3 bg-white text-textDark font-semibold rounded-full hover:bg-cardBg transition shadow-md text-sm">
+                            Iniciar Recorrido
+                        </button>
+                        <a href="#elementos"
+                            class="px-6 py-3 border border-white/40 hover:bg-white/10 text-white font-medium rounded-full transition text-sm">
+                            5 Elementos Básicos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: 5 Elementos de la Danza -->
+            <div id="elementos" class="space-y-6">
+                <div class="text-center max-w-2xl mx-auto">
+                    <span class="text-purpleMid uppercase tracking-widest text-xs font-bold">Fundamentos Teóricos</span>
+                    <h2 class="text-3xl sm:text-4xl font-title font-bold text-textDark mt-1">Los 5 Elementos de la Danza
+                    </h2>
+                    <p class="text-textDark/80 text-sm mt-2">
+                        Toda manifestación dancística, sin importar su época o estilo, se compone de la interrelación
+                        armónica de estos cinco pilares universales.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Element 1: Cuerpo -->
+                    <div
+                        class="bg-cardBg/40 border border-cardBg rounded-2xl p-5 hover:bg-cardBg/70 transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-xl bg-purpleMid text-white flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-child-reaching"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-title text-textDark mb-2">1. Cuerpo</h3>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                El vehículo y lienzo principal. Incluye la estructura anatómica, alineación,
+                                respiración, posturas y la conciencia cenestésica del bailarín.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-purpleMid/20 text-[11px] font-semibold text-purpleMid">
+                            Ejemplo: Postura y ejes.
+                        </div>
+                    </div>
+
+                    <!-- Element 2: Acción -->
+                    <div
+                        class="bg-cardBg/40 border border-cardBg rounded-2xl p-5 hover:bg-cardBg/70 transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-xl bg-purpleMid text-white flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-person-running"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-title text-textDark mb-2">2. Acción</h3>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                Cualquier movimiento ejecutado. Se divide en movimientos <strong
+                                    class="text-textDark">locomotores</strong> (traslaciones, saltos) y <strong
+                                    class="text-textDark">no locomotores</strong> (giros, flexiones).
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-purpleMid/20 text-[11px] font-semibold text-purpleMid">
+                            Ejemplo: Caminar, saltar, girar.
+                        </div>
+                    </div>
+
+                    <!-- Element 3: Espacio -->
+                    <div
+                        class="bg-cardBg/40 border border-cardBg rounded-2xl p-5 hover:bg-cardBg/70 transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-xl bg-purpleMid text-white flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-title text-textDark mb-2">3. Espacio</h3>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                Dónde se desarrolla el movimiento: incluye los niveles (alto, medio, bajo), las
+                                direcciones, trayectorias, el foco visual y la relación con el escenario.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-purpleMid/20 text-[11px] font-semibold text-purpleMid">
+                            Ejemplo: Trabajo de suelo vs saltos.
+                        </div>
+                    </div>
+
+                    <!-- Element 4: Tiempo -->
+                    <div
+                        class="bg-cardBg/40 border border-cardBg rounded-2xl p-5 hover:bg-cardBg/70 transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-xl bg-purpleMid text-white flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-title text-textDark mb-2">4. Tiempo</h3>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                Regula la velocidad, duración y pulso del movimiento. Comprende el tempo musical, el
+                                ritmo interno, los acentos e influencias de la métrica.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-purpleMid/20 text-[11px] font-semibold text-purpleMid">
+                            Ejemplo: Adagio (lento) vs Allegro.
+                        </div>
+                    </div>
+
+                    <!-- Element 5: Energía -->
+                    <div
+                        class="bg-cardBg/40 border border-cardBg rounded-2xl p-5 hover:bg-cardBg/70 transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-xl bg-purpleMid text-white flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-fire-flame-curved"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-title text-textDark mb-2">5. Energía / Peso</h3>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                La cualidad física y la intención expresiva. Varía según la fuerza muscular
+                                (fuerte/suave), el uso del peso (pesado/liviano) y el flujo (continua/cortada).
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-purpleMid/20 text-[11px] font-semibold text-purpleMid">
+                            Ejemplo: Movimiento explosivo o fluido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: Glosario General de Danza Interactivo -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cardBg shadow-dance space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-purpleMid uppercase tracking-widest text-xs font-bold">Vocabulario
+                            Técnico</span>
+                        <h2 class="text-3xl font-title font-bold text-textDark">Glosario General de Danza</h2>
+                        <p class="text-xs text-textDark/70">Términos transversales aplicables al estudio teórico y
+                            práctico de las artes escénicas.</p>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-72">
+                        <i
+                            class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-purpleMid text-sm"></i>
+                        <input type="text" id="glossary-search" placeholder="Buscar concepto o término..."
+                            onkeyup="filterGlossary()"
+                            class="w-full pl-9 pr-4 py-2 bg-bgMain border border-cardBg rounded-full text-xs text-textDark focus:outline-none focus:ring-2 focus:ring-purpleMid">
+                    </div>
+                </div>
+
+                <!-- Glossary Filter Category Pills -->
+                <div class="flex flex-wrap gap-2 pt-2 border-t border-cardBg/40">
+                    <button onclick="filterGlossaryCategory('all')"
+                        class="glossary-cat-btn px-3 py-1 rounded-full text-xs bg-purpleMid text-white font-medium">Todos</button>
+                    <button onclick="filterGlossaryCategory('tecnica')"
+                        class="glossary-cat-btn px-3 py-1 rounded-full text-xs bg-cardLight text-textDark hover:bg-cardBg font-medium">Técnica
+                        y Alineación</button>
+                    <button onclick="filterGlossaryCategory('composicion')"
+                        class="glossary-cat-btn px-3 py-1 rounded-full text-xs bg-cardLight text-textDark hover:bg-cardBg font-medium">Composición
+                        Escénica</button>
+                    <button onclick="filterGlossaryCategory('dinamica')"
+                        class="glossary-cat-btn px-3 py-1 rounded-full text-xs bg-cardLight text-textDark hover:bg-cardBg font-medium">Dinámica
+                        y Tiempo</button>
+                </div>
+
+                <!-- Glossary Cards Container -->
+                <div id="glossary-grid"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[480px] overflow-y-auto pr-2">
+                    <!-- Dynamic Glossary items populated by JS -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 2: DANZA CLÁSICA ================= -->
+        <section id="content-clasica" class="tab-content space-y-12">
+
+            <!-- Header Section -->
+            <div
+                class="bg-gradient-to-r from-textDark to-purpleMid rounded-3xl p-8 text-white shadow-dance relative overflow-hidden">
+                <div class="max-w-2xl relative z-10 space-y-2">
+                    <span
+                        class="px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider">Tradición
+                        Académica</span>
+                    <h1 class="text-4xl sm:text-5xl font-title font-bold">Danza Clásica (Ballet)</h1>
+                    <p class="text-purple-100 text-sm sm:text-base leading-relaxed font-light">
+                        El sistema formalizado de danza surgido en las cortes europeas, caracterizado por el rigor
+                        técnico, el uso de las puntas, la rotación externa y la búsqueda del equilibrio de la gravedad.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contexto Histórico -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cardBg shadow-sm space-y-6">
+                <div class="border-b border-cardBg pb-4">
+                    <span class="text-purpleMid text-xs font-bold uppercase tracking-wider">Evolución Histórica</span>
+                    <h2 class="text-3xl font-title font-bold text-textDark">Origen y Consolidación del Ballet</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-cardBg/30 rounded-2xl border border-cardBg space-y-2">
+                        <div
+                            class="w-8 h-8 rounded-full bg-purpleMid text-white flex items-center justify-center font-bold text-xs">
+                            1</div>
+                        <h3 class="font-title font-bold text-lg text-textDark">Renacimiento Italiano (S. XV - XVI)</h3>
+                        <p class="text-xs text-textDark/80 leading-relaxed">
+                            Nace en las cortes de Italia como baile de salón aristocrático (*ballo*). Catalina de Médici
+                            lo lleva a Francia convirtiéndolo en un espectáculo cortesano de gran elegancia.
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-cardBg/30 rounded-2xl border border-cardBg space-y-2">
+                        <div
+                            class="w-8 h-8 rounded-full bg-purpleMid text-white flex items-center justify-center font-bold text-xs">
+                            2</div>
+                        <h3 class="font-title font-bold text-lg text-textDark">Corte de Luis XIV (Francia, 1661)</h3>
+                        <p class="text-xs text-textDark/80 leading-relaxed">
+                            El "Rey Sol" apasionado del ballet, funda la <strong class="text-textDark">Académie Royale
+                                de Danse</strong>. Pierre Beauchamp codifica las cinco posiciones básicas de pies y el
+                            vocabulario en francés.
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-cardBg/30 rounded-2xl border border-cardBg space-y-2">
+                        <div
+                            class="w-8 h-8 rounded-full bg-purpleMid text-white flex items-center justify-center font-bold text-xs">
+                            3</div>
+                        <h3 class="font-title font-bold text-lg text-textDark">Romanticismo y Rusia (S. XIX)</h3>
+                        <p class="text-xs text-textDark/80 leading-relaxed">
+                            Aparecen las zapatillas de punta y el tutú. El ballet ruso (Marius Petipa) crea obras cumbre
+                            como <em class="text-textDark">El Lago de los Cisnes</em> y <em class="text-textDark">El
+                                Cascanueces</em>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Section: Las 5 Posiciones del Ballet -->
+            <div class="bg-cardLight rounded-3xl p-6 sm:p-8 border border-cardBg space-y-6">
+                <div class="text-center max-w-xl mx-auto space-y-1">
+                    <span class="text-purpleMid text-xs font-bold uppercase tracking-wider">Técnica Fundamental</span>
+                    <h2 class="text-3xl font-title font-bold text-textDark">Las 5 Posiciones Académicas de Pies</h2>
+                    <p class="text-xs text-textDark/80">
+                        Basadas en el principio de rotación externa o <em class="font-semibold">en dehors</em> (desde la
+                        articulación de la cadera). Haz clic en cada posición para explorar su ejecución.
+                    </p>
+                </div>
+
+                <!-- Selector de Posiciones -->
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="selectBalletPosition(1)" id="pos-btn-1"
+                        class="pos-btn px-4 py-2 rounded-xl bg-purpleMid text-white text-xs font-bold transition shadow-sm">1ª
+                        Posición</button>
+                    <button onclick="selectBalletPosition(2)" id="pos-btn-2"
+                        class="pos-btn px-4 py-2 rounded-xl bg-white text-textDark border border-cardBg text-xs font-bold hover:bg-cardBg transition">2ª
+                        Posición</button>
+                    <button onclick="selectBalletPosition(3)" id="pos-btn-3"
+                        class="pos-btn px-4 py-2 rounded-xl bg-white text-textDark border border-cardBg text-xs font-bold hover:bg-cardBg transition">3ª
+                        Posición</button>
+                    <button onclick="selectBalletPosition(4)" id="pos-btn-4"
+                        class="pos-btn px-4 py-2 rounded-xl bg-white text-textDark border border-cardBg text-xs font-bold hover:bg-cardBg transition">4ª
+                        Posición</button>
+                    <button onclick="selectBalletPosition(5)" id="pos-btn-5"
+                        class="pos-btn px-4 py-2 rounded-xl bg-white text-textDark border border-cardBg text-xs font-bold hover:bg-cardBg transition">5ª
+                        Posición</button>
+                </div>
+
+                <!-- Display Box for Selected Position -->
+                <div id="position-display-card"
+                    class="bg-white rounded-2xl p-6 border border-cardBg flex flex-col md:flex-row items-center gap-6 shadow-sm">
+                    <!-- SVG Visual Demonstration -->
+                    <div
+                        class="w-48 h-48 bg-bgMain rounded-xl border border-cardBg flex items-center justify-center p-4 flex-shrink-0">
+                        <svg id="position-svg" viewBox="0 0 200 200" class="w-full h-full text-purpleMid">
+                            <!-- Dynamic SVG Foot Diagram inserted by JS -->
+                        </svg>
+                    </div>
+
+                    <div class="space-y-3 flex-grow">
+                        <div class="flex items-center space-x-2">
+                            <span id="pos-number-badge"
+                                class="px-2.5 py-1 bg-purpleMid text-white text-xs font-bold rounded-md">Posición
+                                1</span>
+                            <h3 id="pos-title" class="text-2xl font-title font-bold text-textDark">Primera Posición
+                                (Primera)</h3>
+                        </div>
+                        <p id="pos-description" class="text-xs text-textDark/80 leading-relaxed">
+                            Los talones se juntan tocándose uno al otro, mientras que las puntas de los pies rotan
+                            completamente hacia afuera abriéndose en una línea horizontal continua (180° si la
+                            flexibilidad de cadera lo permite).
+                        </p>
+                        <div class="p-3 bg-bgMain rounded-xl border border-cardBg/60 text-xs text-textDark/90">
+                            <strong>Brazo equivalente:</strong> <span id="pos-arms">Brazos redondeados frente al plexo
+                                solar (en couronne o primera de brazos).</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multimedia & Visual Resources -->
+            <div class="space-y-6">
+                <div class="border-b border-cardBg pb-2">
+                    <h2 class="text-2xl font-title font-bold text-textDark">Recursos Multimedia y Ejemplos en Video</h2>
+                    <p class="text-xs text-textDark/70">Observación técnica de repertorio e instrucción de la danza
+                        clásica.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Video Embed 1 -->
+                    <div class="bg-white rounded-2xl overflow-hidden border border-cardBg shadow-sm">
+                        <div class="aspect-video w-full bg-textDark relative">
+                            <!-- Corrección del enlace para incrustar el video -->
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/7ZboDD28qxU"
+                                title="Ballet Basics - Royal Opera House" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="p-4 space-y-1">
+                            <!-- Corrección en la estructura del título y párrafo -->
+                            <h3 class="font-title font-bold text-lg text-textDark">Fundamentos y Barra Básica de Ballet
+                            </h3>
+                            <p class="text-xs text-textDark/70">Royal Ballet sobre los ejercicios esenciales de
+                                calentamiento en barra.</p>
+                        </div>
+                    </div>
+
+                    <!-- Video Embed 2 -->
+                    <div class="bg-white rounded-2xl overflow-hidden border border-cardBg shadow-sm">
+                        <div class="aspect-video w-full bg-textDark relative">
+                            <!-- Corrección en el atributo src: se usó /embed/ en lugar de /watch?v= -->
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/3sv-wRZspzw"
+                                title="Swan Lake Variations" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="p-4 space-y-1">
+                            <!-- Corrección en las etiquetas h3 y p -->
+                            <h3 class="font-title font-bold text-lg text-textDark">Variación Clásica: El Lago de los
+                                Cisnes</h3>
+                            <p class="text-xs text-textDark/70">Demostración pedagógica del Lago de los Cisnes</p>
+                            <p class="text-xs text-textDark/70">Ejemplo de virtuosismo escénico, alineación, giros
+                                (fouettés) y expresión dramática del repertorio tradicional.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 3: DANZA MODERNA ================= -->
+        <section id="content-moderna" class="tab-content space-y-12">
+
+            <!-- Header Section -->
+            <div
+                class="bg-gradient-to-r from-purpleMid via-accentBtn to-textDark rounded-3xl p-8 text-white shadow-dance relative overflow-hidden">
+                <div class="max-w-2xl relative z-10 space-y-2">
+                    <span
+                        class="px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider">Ruptura
+                        y Expresión Libre</span>
+                    <h1 class="text-4xl sm:text-5xl font-title font-bold">Danza Moderna</h1>
+                    <p class="text-purple-100 text-sm sm:text-base leading-relaxed font-light">
+                        Rebelión de principios del siglo XX contra la rigidez del ballet clásico. Introdujo el trabajo
+                        con los pies descalzos, el torso expresivo y la interacción honesta con la gravedad.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Breve Contexto Histórico -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cardBg shadow-sm space-y-4">
+                <span class="text-purpleMid text-xs font-bold uppercase tracking-wider">Contexto Histórico</span>
+                <h2 class="text-3xl font-title font-bold text-textDark">La Revolución del Movimiento Natural</h2>
+                <p class="text-xs text-textDark/80 leading-relaxed">
+                    A inicios del siglo XX, pioneras como <strong class="text-textDark">Isadora Duncan</strong>, <strong
+                        class="text-textDark">Ruth St. Denis</strong> y <strong class="text-textDark">Loïe
+                        Fuller</strong> rechazaron el tutú, las zapatillas de punta y las historias fantásticas del
+                    ballet. Buscaron una forma de bailar que expresara emociones humanas profundas, conectada con la
+                    naturaleza y con un torso libre y dinámico.
+                </p>
+            </div>
+
+            <!-- SECTION: Técnicas Icónicas de Danza Moderna -->
+            <div class="space-y-6">
+                <div class="text-center max-w-xl mx-auto space-y-1">
+                    <span class="text-purpleMid text-xs font-bold uppercase tracking-wider">Técnicas Codificadas</span>
+                    <h2 class="text-3xl font-title font-bold text-textDark">Tres Pioneros de la Danza Moderna</h2>
+                    <p class="text-xs text-textDark/80">Explora los sistemas técnicos más influyentes del siglo XX.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Técnica Graham -->
+                    <div
+                        class="bg-white rounded-3xl p-6 border border-cardBg shadow-sm hover:shadow-dance transition-all duration-300 flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-purpleMid text-white flex items-center justify-center text-xl font-bold">
+                                MG
+                            </div>
+                            <h3 class="text-2xl font-title font-bold text-textDark">Martha Graham</h3>
+                            <span
+                                class="inline-block px-2.5 py-0.5 bg-cardBg/60 text-textDark rounded-md text-[11px] font-semibold">
+                                Contracción y Liberación
+                            </span>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                Su técnica se fundamenta en el ciclo fisiológico de la respiración: <strong
+                                    class="text-textDark">Contraction & Release</strong>. Utiliza el centro del cuerpo
+                                (la pelvis y el abdomen) como motor dramático de todo movimiento.
+                            </p>
+                            <ul class="text-xs text-textDark/80 space-y-1.5 pt-2 list-disc list-inside">
+                                <li>Uso expresivo del suelo (*floorwork*).</li>
+                                <li>Espirales de la columna vertebral.</li>
+                                <li>Intensidad emocional y drama mítico.</li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-cardBg/60">
+                            <button onclick="openTechniqueModal('graham')"
+                                class="w-full py-2 bg-cardLight hover:bg-cardBg text-textDark text-xs font-semibold rounded-xl transition">
+                                <i class="fa-solid fa-circle-info mr-1"></i>Ver Detalles de Técnica
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Técnica Limón -->
+                    <div
+                        class="bg-white rounded-3xl p-6 border border-cardBg shadow-sm hover:shadow-dance transition-all duration-300 flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-purpleMid text-white flex items-center justify-center text-xl font-bold">
+                                JL
+                            </div>
+                            <h3 class="text-2xl font-title font-bold text-textDark">José Limón</h3>
+                            <span
+                                class="inline-block px-2.5 py-0.5 bg-cardBg/60 text-textDark rounded-md text-[11px] font-semibold">
+                                Caída y Recuperación
+                            </span>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                Desarrollada junto a Doris Humphrey. Se basa en la ley física de la gravedad: <strong
+                                    class="text-textDark">Fall & Recovery</strong>. Explora la fuerza del peso corporal,
+                                la suspensión y la respiración orgánica.
+                            </p>
+                            <ul class="text-xs text-textDark/80 space-y-1.5 pt-2 list-disc list-inside">
+                                <li>Efecto de rebote (*rebound*).</li>
+                                <li>Sensación de ingravidez momentánea.</li>
+                                <li>Humanismo y fluidez lírica.</li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-cardBg/60">
+                            <button onclick="openTechniqueModal('limon')"
+                                class="w-full py-2 bg-cardLight hover:bg-cardBg text-textDark text-xs font-semibold rounded-xl transition">
+                                <i class="fa-solid fa-circle-info mr-1"></i>Ver Detalles de Técnica
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Técnica Horton -->
+                    <div
+                        class="bg-white rounded-3xl p-6 border border-cardBg shadow-sm hover:shadow-dance transition-all duration-300 flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-purpleMid text-white flex items-center justify-center text-xl font-bold">
+                                LH
+                            </div>
+                            <h3 class="text-2xl font-title font-bold text-textDark">Lester Horton</h3>
+                            <span
+                                class="inline-block px-2.5 py-0.5 bg-cardBg/60 text-textDark rounded-md text-[11px] font-semibold">
+                                Geometría y Aislamiento
+                            </span>
+                            <p class="text-xs text-textDark/80 leading-relaxed">
+                                Enfoque anatómico integral que fortalece y flexibiliza el cuerpo mediante posiciones
+                                geométricas puras como las <strong class="text-textDark">Flat Backs</strong> (espalda
+                                plana en 90°) e influencias de danzas nativas.
+                            </p>
+                            <ul class="text-xs text-textDark/80 space-y-1.5 pt-2 list-disc list-inside">
+                                <li>Fortalecimiento articular profundo.</li>
+                                <li>Aislamientos de torso y pelvis.</li>
+                                <li>Estiramientos laterales y diagonales.</li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-cardBg/60">
+                            <button onclick="openTechniqueModal('horton')"
+                                class="w-full py-2 bg-cardLight hover:bg-cardBg text-textDark text-xs font-semibold rounded-xl transition">
+                                <i class="fa-solid fa-circle-info mr-1"></i>Ver Detalles de Técnica
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video demostrativo Danza Moderna -->
+            <div class="bg-white rounded-3xl p-6 border border-cardBg space-y-4 shadow-sm">
+                <h3 class="text-xl font-title font-bold text-textDark">Demostración en Video: Técnica Martha Graham</h3>
+                <div class="aspect-video w-full bg-textDark rounded-2xl overflow-hidden">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/324_P4BfT7g"
+                        title="Martha Graham Dance Technique" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 4: DANZA CONTEMPORÁNEA ================= -->
+        <section id="content-contemporanea" class="tab-content space-y-12">
+
+            <!-- Header Section -->
+            <div
+                class="bg-gradient-to-r from-textDark via-purpleMid to-accentBtn rounded-3xl p-8 text-white shadow-dance relative overflow-hidden">
+                <div class="max-w-2xl relative z-10 space-y-2">
+                    <span
+                        class="px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider">Experimentación
+                        e Innovación</span>
+                    <h1 class="text-4xl sm:text-5xl font-title font-bold">Danza Contemporánea</h1>
+                    <p class="text-purple-100 text-sm sm:text-base leading-relaxed font-light">
+                        Evolución que combina principios del ballet, la danza moderna, las artes marciales y prácticas
+                        somáticas para investigar las posibilidades infinitas del movimiento humano.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contexto Histórico Posguerra -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-cardBg shadow-sm space-y-4">
+                <span class="text-purpleMid text-xs font-bold uppercase tracking-wider">Origen y Filosofía</span>
+                <h2 class="text-3xl font-title font-bold text-textDark">De la Segunda Posguerra a la Actualidad</h2>
+                <p class="text-xs text-textDark/80 leading-relaxed">
+                    A partir de la década de 1950 (con precursores como <strong class="text-textDark">Merce
+                        Cunningham</strong>, quien desligó la danza de la música y la narrativa) y el movimiento <em
+                        class="text-textDark">Judson Dance Theater</em> en los años 60 en Nueva York, la danza
+                    contemporánea cuestionó qué puede ser considerado "danza", integrando la improvisación, la
+                    cotidianidad y el estudio anatómico somático.
+                </p>
+            </div>
+
+            <!-- Enfoques Contemporáneos -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Release Technique -->
+                <div class="bg-cardLight rounded-3xl p-6 border border-cardBg space-y-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-purpleMid text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+                    <h3 class="text-2xl font-title font-bold text-textDark">Técnica Release</h3>
+                    <p class="text-xs text-textDark/80 leading-relaxed">
+                        Se enfoca en la eficiencia neuromuscular, la alineación articular esquelética y el uso del
+                        mínimo esfuerzo muscular indispensable. Promueve el flujo articular suave y la soltura de
+                        tensiones innecesarias.
+                    </p>
+                    <div class="pt-2 text-[11px] font-semibold text-purpleMid">
+                        Principio: Mínimo esfuerzo, máxima eficiencia.
+                    </div>
+                </div>
+
+                <!-- Contact Improvisation -->
+                <div class="bg-cardLight rounded-3xl p-6 border border-cardBg space-y-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-purpleMid text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-people-arrows"></i>
+                    </div>
+                    <h3 class="text-2xl font-title font-bold text-textDark">Contact Improvisation</h3>
+                    <p class="text-xs text-textDark/80 leading-relaxed">
+                        Desarrollado por Steve Paxton en los años 70. Explora el punto de contacto físico entre dos o
+                        más bailarines, compartiendo peso, momentum, caídas rodadas e improvisación sensorial constante.
+                    </p>
+                    <div class="pt-2 text-[11px] font-semibold text-purpleMid">
+                        Principio: Diálogo físico táctil y gravedad compartida.
+                    </div>
+                </div>
+
+                <!-- Flying Low (Zambrano) -->
+                <div class="bg-cardLight rounded-3xl p-6 border border-cardBg space-y-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-purpleMid text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-person-falling"></i>
+                    </div>
+                    <h3 class="text-2xl font-title font-bold text-textDark">Flying Low (David Zambrano)</h3>
+                    <p class="text-xs text-textDark/80 leading-relaxed">
+                        Técnica enfocada en la relación dinámica con el suelo (*floorwork*). Utiliza curvas, espirales e
+                        impulsos orgánicos para entrar y salir del piso de forma fluida, segura y extremadamente veloz.
+                    </p>
+                    <div class="pt-2 text-[11px] font-semibold text-purpleMid">
+                        Principio: El piso como un aliado dinámico.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Embed Contemporáneo -->
+            <div class="bg-white rounded-3xl p-6 border border-cardBg space-y-4 shadow-sm">
+                <h3 class="text-xl font-title font-bold text-textDark">Ejemplo Escénico: Nederlands Dans Theater (NDT)
+                </h3>
+                <div class="aspect-video w-full bg-textDark rounded-2xl overflow-hidden">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/2vL_4_yT3-k"
+                        title="Nederlands Dans Theater Performance" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 5: QUIZ / AUTOEVALUACIÓN ================= -->
+        <section id="content-quiz" class="tab-content space-y-8">
+
+            <div class="bg-white rounded-3xl p-6 sm:p-10 border border-cardBg shadow-dance space-y-6 max-w-3xl mx-auto">
+                <div class="text-center space-y-2">
+                    <span class="text-purpleMid text-xs font-bold uppercase tracking-wider">Repaso Académico</span>
+                    <h1 class="text-3xl sm:text-4xl font-title font-bold text-textDark">Cuestionario de Autoevaluación
+                    </h1>
+                    <p class="text-xs text-textDark/80">Pone a prueba tus conocimientos adquiridos en este portal
+                        pedagógico sobre Danza Clásica, Moderna y Contemporánea.</p>
+                </div>
+
+                <!-- Quiz Progress Bar -->
+                <div class="w-full bg-bgMain rounded-full h-2 border border-cardBg overflow-hidden">
+                    <div id="quiz-progress"
+                        class="bg-gradient-to-r from-purpleMid to-accentBtn h-full w-1/5 transition-all duration-300">
+                    </div>
+                </div>
+
+                <!-- Container of Questions -->
+                <div id="quiz-container" class="space-y-6">
+                    <!-- Dynamic Question rendering -->
+                </div>
+
+                <!-- Quiz Results Container (Hidden initially) -->
+                <div id="quiz-results" class="hidden text-center space-y-4 py-6">
+                    <div
+                        class="w-20 h-20 mx-auto rounded-full bg-cardBg flex items-center justify-center text-textDark text-3xl">
+                        <i class="fa-solid fa-trophy" id="quiz-result-icon"></i>
+                    </div>
+                    <h2 class="text-2xl font-title font-bold text-textDark" id="quiz-score-title">¡Resultados de tu
+                        Evaluación!</h2>
+                    <p class="text-sm text-textDark/80" id="quiz-score-text"></p>
+                    <button onclick="resetQuiz()"
+                        class="px-6 py-2.5 bg-purpleMid text-white font-semibold text-xs rounded-full hover:bg-purpleHover transition shadow-sm">
+                        Intentar Cuestionario Nuevamente
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Technique Detail Modal -->
+    <div id="tech-modal"
+        class="fixed inset-0 bg-textDark/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-4 border border-cardBg shadow-2xl relative animate-fade-in">
+            <button onclick="closeTechniqueModal()"
+                class="absolute top-4 right-4 text-textDark/60 hover:text-textDark p-2">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <span id="modal-subtitle" class="text-purpleMid text-xs font-bold uppercase tracking-wider">Técnica de
+                Danza</span>
+            <h3 id="modal-title" class="text-3xl font-title font-bold text-textDark">Título Modal</h3>
+            <div id="modal-body" class="text-xs text-textDark/80 space-y-3 leading-relaxed">
+                <!-- Dynamic body content -->
+            </div>
+            <div class="pt-4 border-t border-cardBg text-right">
+                <button onclick="closeTechniqueModal()"
+                    class="px-5 py-2 bg-purpleMid text-white rounded-full text-xs font-semibold hover:bg-purpleHover">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-cardBg mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+            <div class="flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-graduation-cap text-purpleMid"></i>
+                <span class="font-title font-bold text-lg text-textDark">Proyecto Escolar de Artes Escénicas</span>
+            </div>
+            <p class="text-xs text-textDark/70 max-w-md mx-auto">
+                Desarrollado como recurso educativo e interactivo sobre Danza Clásica, Moderna y Contemporánea para el
+                estado de Hidalgo.
+            </p>
+            <p class="text-[11px] text-purpleMid font-medium">
+                © Proyecto Académico • UAEH - UNIVERSIDAD AUTONOMA DEL ESTADO DE HIDALGO
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /* ================= STATE & DATA ================= */
+
+        // Glosario de terminos
+        const glossaryTerms = [
+            { term: "Alineación", cat: "tecnica", def: "Posición óptima y equilibrada de la cabeza, hombros, columna, pelvis y extremidades sobre la base de apoyo.", ex: "Es fundamental para prevenir lesiones." },
+            { term: "Eje Corporal", cat: "tecnica", def: "Línea imaginaria vertical que atraviesa el cuerpo de la cabeza al suelo sobre la cual se estructuran los equilibrios y giros.", ex: "Vital para las piruetas." },
+            { term: "Improvisación", cat: "composicion", def: "Creación de movimiento espontáneo en tiempo real sin una estructura coreográfica prefijada.", ex: "Uso frecuente en Danza Contemporánea." },
+            { term: "Coreografía", cat: "composicion", def: "Arte y estructura de diseñar una secuencia planificada de movimientos dancísticos en el espacio y tiempo.", ex: "Creada por el coreógrafo." },
+            { term: "Canon", cat: "composicion", def: "Estructura en la que una frase de movimiento es ejecutada sucesivamente por diferentes bailarines con desfase de tiempo.", ex: "Crea un efecto de ola o eco visual." },
+            { term: "Fraseo", cat: "dinamica", def: "Organización de movimientos agrupados en una unidad con principio, desarrollo, acento y final.", ex: "Equivalente a una frase musical." },
+            { term: "Dinámica", cat: "dinamica", def: "Modulación de la fuerza, energía y velocidad empleadas al ejecutar un movimiento.", ex: "Diferencia un gesto brusco de uno suave." },
+            { term: "Espacio Escénico", cat: "composicion", def: "Área física designada para la interpretación dancística (escenario, suelo, espacio público).", ex: "Incluye los 9 puntos del escenario." },
+            { term: "Rotación (En Dehors)", cat: "tecnica", def: "Giro hacia afuera de los miembros inferiores que se origina desde la articulación coxofemoral (cadera).", ex: "Base técnica del ballet clásico." },
+            { term: "Suspensión", cat: "dinamica", def: "Sensación momentánea de ingravidez en el clímax de un salto o elevación antes de la caída.", ex: "Clave en la técnica Limón." }
+        ];
+
+        // Posiciones del Ballet
+        const balletPositions = {
+            1: {
+                title: "Primera Posición (Première)",
+                desc: "Los talones se juntan tocándose uno al otro, mientras que las puntas de los pies rotan completamente hacia afuera abriéndose en una línea horizontal continua (180° si la flexibilidad articular de cadera lo permite).",
+                arms: "Brazos redondeados frente al plexo solar manteniendo codos sostenidos (Primera de brazos).",
+                svg: `<path d="M 40 100 C 40 70, 70 40, 100 40 C 130 40, 160 70, 160 100" fill="none" stroke="#7f4ca5" stroke-width="4"/><ellipse cx="70" cy="110" rx="30" ry="12" transform="rotate(-60 70 110)" fill="#b57edc"/><ellipse cx="130" cy="110" rx="30" ry="12" transform="rotate(60 130 110)" fill="#b57edc"/><circle cx="100" cy="110" r="5" fill="#4b1c71"/>`
+            },
+            2: {
+                title: "Segunda Posición (Seconde)",
+                desc: "Los pies permanecen en la misma rotación en dehors que la primera posición, pero separados lateralmente por la distancia aproximada de un pie entre ambos talones.",
+                arms: "Brazos abiertos hacia los lados, suavemente curvados con las palmas mirando hacia el frente.",
+                svg: `<path d="M 20 120 L 180 120" stroke="#7f4ca5" stroke-width="3" stroke-dasharray="4"/><ellipse cx="40" cy="110" rx="30" ry="12" transform="rotate(-60 40 110)" fill="#b57edc"/><ellipse cx="160" cy="110" rx="30" ry="12" transform="rotate(60 160 110)" fill="#b57edc"/>`
+            },
+            3: {
+                title: "Tercera Posición (Troisième)",
+                desc: "Un pie se coloca directamente delante del otro, de modo que el talón del pie delantero toque el centro del arco del pie trasero.",
+                arms: "Un brazo se mantiene en primera posición y el otro se abre hacia el lado en segunda posición.",
+                svg: `<ellipse cx="90" cy="120" rx="30" ry="12" transform="rotate(-60 90 120)" fill="#dbb6ee"/><ellipse cx="110" cy="100" rx="30" ry="12" transform="rotate(-60 110 100)" fill="#b57edc"/>`
+            },
+            4: {
+                title: "Cuarta Posición (Quatrième)",
+                desc: "Los pies están cruzados uno frente al otro (en la alineación de quinta), pero separados paralelamente hacia adelante por la distancia de un pie.",
+                arms: "Un brazo redondeado sobre la cabeza (en haut) y el otro mantenido en primera o segunda posición.",
+                svg: `<ellipse cx="100" cy="130" rx="30" ry="12" transform="rotate(-60 100 130)" fill="#dbb6ee"/><ellipse cx="100" cy="70" rx="30" ry="12" transform="rotate(-60 100 70)" fill="#b57edc"/><line x1="100" y1="70" x2="100" y2="130" stroke="#7f4ca5" stroke-width="2" stroke-dasharray="3"/>`
+            },
+            5: {
+                title: "Quinta Posición (Cinquième)",
+                desc: "Los pies se cruzan completamente de modo que el talón del pie delantero toque el dedo gordo del pie trasero, formando un bloqueo cerrado perfecto.",
+                arms: "Ambos brazos elevados y redondeados suavemente sobre la cabeza formando un óvalo (en couronne).",
+                svg: `<ellipse cx="95" cy="110" rx="30" ry="12" transform="rotate(-60 95 110)" fill="#dbb6ee"/><ellipse cx="105" cy="95" rx="30" ry="12" transform="rotate(-60 105 95)" fill="#b57edc"/>`
+            }
+        };
+
+        // Modal Details Data for Modern Techniques
+        const techModalData = {
+            graham: {
+                title: "Técnica Martha Graham",
+                subtitle: "Contracción y Liberación (Contraction & Release)",
+                body: `<p>Martha Graham (1894-1991) revolucionó el arte dancístico al colocar el origen de todo movimiento en el centro fisiológico del cuerpo: el torso y la pelvis.</p>
+                       <p><strong>Principios clave:</strong></p>
+                       <ul class="list-disc list-inside space-y-1">
+                          <li><strong>Contracción:</strong> Exhalación profunda donde los músculos abdominales se ahuecan tirando de la pelvis hacia adelante y curvando la columna en C.</li>
+                          <li><strong>Liberación (Release):</strong> Inhalación llena que expande el tórax y alarga la columna desde la pelvis.</li>
+                          <li><strong>Trabajo de suelo:</strong> Secuencias exhaustivas sentado y acostado para dominar el centro antes de ponerse de pie.</li>
+                       </ul>`
+            },
+            limon: {
+                title: "Técnica José Limón",
+                subtitle: "Caída, Recuperación y Suspensión",
+                body: `<p>José Limón (1908-1972), bailarina y coreógrafo de origen mexicano, desarrolló un enfoque humanista y fluido junto a Doris Humphrey.</p>
+                       <p><strong>Principios clave:</strong></p>
+                       <ul class="list-disc list-inside space-y-1">
+                          <li><strong>Gravedad y Peso:</strong> Rendirse conscientemente a la fuerza de gravedad y utilizar el peso como impulso.</li>
+                          <li><strong>Caída y Recuperación:</strong> El cuerpo cae rítmicamente para luego recuperar el equilibrio mediante un rebote dinámico.</li>
+                          <li><strong>Aislamiento corporal:</strong> Uso de distintas partes del cuerpo (hombros, torso, brazos) como instrumentos de una orquesta.</li>
+                       </ul>`
+            },
+            horton: {
+                title: "Técnica Lester Horton",
+                subtitle: "Fortalecimiento Anatómico y Geometría",
+                body: `<p>Lester Horton (1906-1953) creó un enfoque de entrenamiento sumamente versátil diseñado para corregir y fortalecer la anatomía del bailarín.</p>
+                       <p><strong>Principios clave:</strong></p>
+                       <ul class="list-disc list-inside space-y-1">
+                          <li><strong>Flat Backs:</strong> Flexión de la cadera manteniendo la columna completamente recta en un ángulo de 90°.</li>
+                          <li><strong>Aislamientos:</strong> Movilización independiente de la cabeza, tórax, pelvis y extremidades.</li>
+                          <li><strong>Inspiración Étnica:</strong> Integración de elementos folclóricos y danzas afrocubanas con líneas geométricas.</li>
+                       </ul>`
+            }
+        };
+
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                q: "¿Cuál es el motor o principio fisiológico fundamental de la técnica de Martha Graham?",
+                options: ["Rotación en dehors y puntas", "Contracción y Liberación mediante la respiración", "Caída y Recuperación con gravedad", "Alineación esquelética somática"],
+                correct: 1
+            },
+            {
+                q: "¿En qué siglo y contexto surgió la Académie Royale de Danse impulsada por Luis XIV?",
+                options: ["Siglo XV en Italia", "Siglo XVII en Francia", "Siglo XIX en Rusia", "Siglo XX en Estados Unidos"],
+                correct: 1
+            },
+            {
+                q: "¿Qué técnica contemporánea se enfoca en la investigación del punto de contacto físico entre dos o más bailarines compartiendo peso?",
+                options: ["Flying Low", "Técnica Release", "Contact Improvisation", "Ballet Romántico"],
+                correct: 2
+            },
+            {
+                q: "¿Cuál de los 5 elementos de la danza comprende los niveles (alto, medio, bajo) y las direcciones en el escenario?",
+                options: ["Tiempo", "Cuerpo", "Energía / Peso", "Espacio"],
+                correct: 3
+            },
+            {
+                q: "El término 'En dehors' en el Ballet Clásico hace referencia a:",
+                options: ["La rotación hacia afuera de los miembros inferiores desde la cadera", "Un salto con giro en el aire", "El estiramiento del pie en el suelo", "La postura con espalda plana a 90°"],
+                correct: 0
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        /* ================= Logica de navegacion ================= */
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            const targetContent = document.getElementById(`content-${tabId}`);
+            const targetBtn = document.getElementById(`tab-btn-${tabId}`);
+
+            if (targetContent) targetContent.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
+
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* ================= Logica del glosario ================= */
+        function renderGlossary(filterText = "", category = "all") {
+            const container = document.getElementById('glossary-grid');
+            container.innerHTML = "";
+
+            const filtered = glossaryTerms.filter(item => {
+                const matchesText = item.term.toLowerCase().includes(filterText.toLowerCase()) ||
+                    item.def.toLowerCase().includes(filterText.toLowerCase());
+                const matchesCat = category === "all" || item.cat === category;
+                return matchesText && matchesCat;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-xs text-textDark/60">No se encontraron conceptos que coincidan con la búsqueda.</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "p-4 bg-cardBg/30 rounded-2xl border border-cardBg/80 space-y-2 hover:bg-cardBg/50 transition";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-title font-bold text-lg text-textDark">${item.term}</h4>
+                        <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-cardBg text-textDark rounded-full font-semibold">${item.cat}</span>
+                    </div>
+                    <p class="text-xs text-textDark/80 leading-relaxed">${item.def}</p>
+                    <div class="text-[11px] text-purpleMid italic">Ejemplo: ${item.ex}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterGlossary() {
+            const text = document.getElementById('glossary-search').value;
+            renderGlossary(text, window.currentGlossaryCat || 'all');
+        }
+
+        function filterGlossaryCategory(cat) {
+            window.currentGlossaryCat = cat;
+            document.querySelectorAll('.glossary-cat-btn').forEach(btn => {
+                btn.className = "glossary-cat-btn px-3 py-1 rounded-full text-xs bg-cardLight text-textDark hover:bg-cardBg font-medium";
+            });
+            event.target.className = "glossary-cat-btn px-3 py-1 rounded-full text-xs bg-purpleMid text-white font-medium";
+            filterGlossary();
+        }
+
+        /* ================= BALLET POSITIONS LOGIC ================= */
+        function selectBalletPosition(num) {
+            const data = balletPositions[num];
+            if (!data) return;
+
+            document.querySelectorAll('.pos-btn').forEach((btn, idx) => {
+                if (idx + 1 === num) {
+                    btn.className = "pos-btn px-4 py-2 rounded-xl bg-purpleMid text-white text-xs font-bold transition shadow-sm";
+                } else {
+                    btn.className = "pos-btn px-4 py-2 rounded-xl bg-white text-textDark border border-cardBg text-xs font-bold hover:bg-cardBg transition";
+                }
+            });
+
+            document.getElementById('pos-number-badge').innerText = `Posición ${num}`;
+            document.getElementById('pos-title').innerText = data.title;
+            document.getElementById('pos-description').innerText = data.desc;
+            document.getElementById('pos-arms').innerText = data.arms;
+            document.getElementById('position-svg').innerHTML = data.svg;
+        }
+
+        /* ================= MODAL LOGIC ================= */
+        function openTechniqueModal(key) {
+            const data = techModalData[key];
+            if (!data) return;
+
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-subtitle').innerText = data.subtitle;
+            document.getElementById('modal-body').innerHTML = data.body;
+            document.getElementById('tech-modal').classList.remove('hidden');
+        }
+
+        function closeTechniqueModal() {
+            document.getElementById('tech-modal').classList.add('hidden');
+        }
+
+        /* ================= QUIZ LOGIC ================= */
+        function renderQuizQuestion() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = "";
+
+            if (currentQuizIndex >= quizQuestions.length) {
+                showQuizResults();
+                return;
+            }
+
+            const qData = quizQuestions[currentQuizIndex];
+
+            // Actualizar la barra de progreso
+            const progressPct = ((currentQuizIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progressPct}%`;
+
+            const card = document.createElement('div');
+            card.className = "space-y-4 animate-fade-in";
+            card.innerHTML = `
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-purpleMid">Pregunta ${currentQuizIndex + 1} de ${quizQuestions.length}</span>
+                    <h3 class="text-xl font-title font-bold text-textDark">${qData.q}</h3>
+                </div>
+                <div class="space-y-2">
+                    ${qData.options.map((opt, idx) => `
+                        <button onclick="handleQuizAnswer(${idx})" class="w-full text-left p-3 rounded-2xl bg-bgMain hover:bg-cardBg border border-cardBg text-xs font-medium text-textDark transition flex items-center justify-between group">
+                            <span>${opt}</span>
+                            <i class="fa-regular fa-circle text-purpleMid group-hover:fa-solid"></i>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        }
+
+        function handleQuizAnswer(selectedIdx) {
+            const qData = quizQuestions[currentQuizIndex];
+            if (selectedIdx === qData.correct) {
+                quizScore++;
+            }
+            currentQuizIndex++;
+            renderQuizQuestion();
+        }
+
+        function showQuizResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resultsDiv = document.getElementById('quiz-results');
+            resultsDiv.classList.remove('hidden');
+
+            const scoreTitle = document.getElementById('quiz-score-title');
+            const scoreText = document.getElementById('quiz-score-text');
+            const icon = document.getElementById('quiz-result-icon');
+
+            if (quizScore >= 4) {
+                scoreTitle.innerText = "¡Excelente Conocimiento Escénico!";
+                scoreText.innerText = `Obtuviste ${quizScore} de ${quizQuestions.length} respuestas correctas. Tienes una sólida comprensión de la historia y técnica de la danza.`;
+                icon.className = "fa-solid fa-trophy text-amber-500";
+            } else {
+                scoreTitle.innerText = "¡Buen Intento!";
+                scoreText.innerText = `Obtuviste ${quizScore} de ${quizQuestions.length} respuestas correctas. Te sugerimos repasar los módulos del portal para afianzar tus conceptos.`;
+                icon.className = "fa-solid fa-book-open text-purpleMid";
+            }
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            renderQuizQuestion();
+        }
+
+        /* ================= ACCESSIBILITY LOGIC ================= */
+        let motionPaused = false;
+        function toggleMotion() {
+            motionPaused = !motionPaused;
+            const icon = document.getElementById('motion-icon');
+            const btnText = document.getElementById('motion-text');
+
+            if (motionPaused) {
+                document.body.classList.add('paused-animation');
+                icon.className = "fa-solid fa-play";
+                if (btnText) btnText.innerText = "Reanudar";
+            } else {
+                document.body.classList.remove('paused-animation');
+                icon.className = "fa-solid fa-pause";
+                if (btnText) btnText.innerText = "Pausar";
+            }
+        }
+
+        /* INITIALIZATION ON PAGE LOAD */
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGlossary();
+            selectBalletPosition(1);
+            renderQuizQuestion();
+        });
+    </script>
+</body>
+
+</html>
